@@ -2,15 +2,38 @@ import flet as ft
 from datetime import datetime
 import logica 
 import notificador
+import json
+import os
 
 # Base de datos simulada de Stock (Actualizada con 5 reactivos)
-STOCK_ACTUAL = {
-    "Reactivo A (Glucosa)": 15,
-    "Reactivo B (Urea)": 8,
-    "Reactivo C (Creatinina)": 0,
-    "Reactivo D (Colesterol)": 20,
-    "Reactivo E (Triglicéridos)": 5,
-}
+# STOCK_ACTUAL = {
+#     STOCK_ACTUAL = cargar_inventario()
+
+#     # "Reactivo A (Glucosa)": 15,
+#     # "Reactivo B (Urea)": 8,
+#     # "Reactivo C (Creatinina)": 0,
+#     # "Reactivo D (Colesterol)": 20,
+#     # "Reactivo E (Triglicéridos)": 5,
+# }
+
+def cargar_inventario():
+    if os.path.exists("inventario.json"):
+        with open("inventario.json", "r") as f:
+            return json.load(f)
+        
+    return {
+        "Reactivo A (Glucosa)": {"stock": 15, "caducidad": "2026-05-20"},
+        "Reactivo B (Urea)": {"stock": 8, "caducidad": "2026-04-15"},
+        "Reactivo C (Creatinina)": {"stock": 2, "caducidad": "2026-12-01"},
+        "Reactivo D (Colesterol)": {"stock": 20, "caducidad": "2026-08-10"},
+        "Reactivo E (Triglicéridos)": {"stock": 5, "caducidad": "2026-03-30"},
+    }
+
+STOCK_ACTUAL = cargar_inventario()
+
+def guardar_inventario(datos):
+    with open("inventario.json", "w") as f:
+        json.dump(datos, f, indent=4)
 
 def main(page: ft.Page):
     page.title = "Gestión de Reactivos - Condesa"
@@ -63,18 +86,30 @@ def main(page: ft.Page):
     # --- PANTALLA 2: MENÚ ---
     def mostrar_menu_principal():
         page.clean()
+        lista_alertas = logica.verificar_alertas(STOCK_ACTUAL)
+        
+        columnas_alertas = []
+        for msj in lista_alertas:
+            columnas_alertas.append(ft.Text(msj, color="orange", weight="bold", size=12))
         page.add(
             ft.Text(f"Unidad: {unidad_seleccionada}", size=18, weight="bold", color="blue"),
+            ft.Container(
+                content=ft.Column(columnas_alertas),
+                visible=len(lista_alertas) > 0,
+                padding=10,
+                bgcolor="#FFF3E0",
+                border_radius=10
+            ),
             ft.Divider(),
             ft.ElevatedButton(
                 "REALIZAR PEDIDO", 
-                icon="shopping_cart", 
+                icon=ft.Icons.ADD, 
                 on_click=lambda _: mostrar_pantalla_pedido(),
                 width=300, height=60
             ),
             ft.ElevatedButton(
                 "GESTIONAR INVENTARIO", 
-                icon="inventory", 
+                icon=ft.Icons.INVENTORY, 
                 on_click=lambda _: mostrar_pantalla_inventario(),
                 width=300, height=60
             ),
@@ -168,7 +203,7 @@ def main(page: ft.Page):
 
         # IMPORTANTE: Agregamos elementos uno por uno (Estructura Plana)
         page.add(
-            ft.IconButton(icon="arrow_back", on_click=lambda _: mostrar_menu_principal()),
+            ft.IconButton(icon=ft.Icons.ARROW_BACK, on_click=lambda _: mostrar_menu_principal()),
             ft.Text(f"Pedido para: {unidad_seleccionada}", size=20, weight="bold"),
             ft.Text("Seleccione Producto:"),
             ac_reactivo,
@@ -179,18 +214,68 @@ def main(page: ft.Page):
             ft.Text("Resumen del pedido:", weight="bold"),
             tabla_resumen,
             ft.Divider(),
-            ft.ElevatedButton("FINALIZAR ENVÍO", icon="send", bgcolor="green", color="white", on_click=finalizar_pedido_click)
+            ft.ElevatedButton("ENVIAR PEDIDO", icon="send", bgcolor="green", color="white", on_click=finalizar_pedido_click)
         )
 
     # --- PANTALLA 4: INVENTARIO ---
     def mostrar_pantalla_inventario():
         page.clean()
+
+        def ajustar_stock(nombre_reactivo, cambio):
+            STOCK_ACTUAL[nombre_reactivo] += cambio
+            if STOCK_ACTUAL[nombre_reactivo] < 0:
+                STOCK_ACTUAL[nombre_reactivo] = 0
+
+            guardar_inventario(STOCK_ACTUAL)
+
+            logica.registrar_evento_ml(unidad_seleccionada, nombre_reactivo, cambio)
+            
+            mostrar_pantalla_inventario()
+
+
         page.add(
-            ft.IconButton(icon="arrow_back", on_click=lambda _: mostrar_menu_principal()),
-            ft.Text("Módulo de Inventario", size=20, weight="bold"),
-            ft.Text("Próximo paso: Gestión de caducidades.", italic=True)
+            ft.IconButton(
+                icon=ft.Icons.ARROW_BACK, 
+                on_click=lambda _: mostrar_menu_principal()
+            ),
+            ft.Text("Gestión de Inventario Físico", size=24, weight="bold"),
+            ft.Text("Ajuste las cantidades según el conteo actual:", italic=True),
+            ft.Divider()
         )
 
+        # Generamos la lista de reactivos dinámicamente
+        for reactivo, cantidad in STOCK_ACTUAL.items():
+            page.add(
+                ft.Container(
+                    content=ft.Row([
+                        # Nombre del reactivo (le damos peso para que empuje los botones)
+                        ft.Text(reactivo, size=16, expand=True),
+                        
+                        # Botón Menos
+                        ft.IconButton(
+                            icon=ft.Icons.REMOVE_CIRCLE_OUTLINE,
+                            icon_color="red",
+                            on_click=lambda _, r=reactivo: ajustar_stock(r, -1)
+                        ),
+                        
+                        # Cantidad Actual
+                        ft.Text(str(cantidad), size=18, weight="bold", width=30, text_align="center"),
+                        
+                        # Botón Más
+                        ft.IconButton(
+                            icon=ft.Icons.ADD_CIRCLE_OUTLINE,
+                            icon_color="green",
+                            on_click=lambda _, r=reactivo: ajustar_stock(r, 1)
+                        ),
+                    ], alignment="spaceBetween"),
+                    padding=10,
+                    border=ft.border.all(1, "lightgrey"),
+                    border_radius=8
+                )
+            )
+
+        page.update()
+    
     mostrar_pantalla_seleccion()
 
 ft.app(target=main)
