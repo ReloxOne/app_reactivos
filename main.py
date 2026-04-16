@@ -60,7 +60,7 @@ def main(page: ft.Page):
         opciones_clinicas = ["Clínica de Especialidades Condesa",
                              "Clínica de Especialidades Condesa Iztapalapa"]
         ac_clinica = ft.AutoComplete(suggestions=[ft.AutoCompleteSuggestion(
-            key=c, value=c) for c in opciones_clinicas])
+            key=c, value=c) for c in opciones_clinicas])  # type: ignore
 
         def confirmar_seleccion(e):
             nonlocal unidad_seleccionada
@@ -83,15 +83,20 @@ def main(page: ft.Page):
 
     def mostrar_menu_principal():
         page.clean()
-        lista_alertas = logica.verificar_alertas(STOCK_ACTUAL)
-        columnas_alertas = [
-            ft.Text(msj, color="orange", weight="bold", size=12) for msj in lista_alertas]
-
+        alertas_actualizadas = logica.verificar_alertas(STOCK_ACTUAL)
+        
         page.add(
-            ft.Text(f"Unidad: {unidad_seleccionada}",
-                    size=18, weight="bold", color="blue"),
-            ft.Container(content=ft.Column(columnas_alertas), visible=len(
-                lista_alertas) > 0, padding=10, bgcolor="#FFF3E0", border_radius=10),
+            ft.Text(f"Unidad: {unidad_seleccionada}", size=30, weight="bold"),
+            ft.Text("Estado del Inventario:", size=20),
+        )
+    
+        if alertas_actualizadas:
+            for alerta in alertas_actualizadas:
+                page.add(ft.Text(alerta, color="orange" if "⚠️" in alerta else "red"))
+        else:
+            page.add(ft.Text("✅ Todo el stock está al día", color="green"))
+            
+        page.add(
             ft.Divider(),
             ft.ElevatedButton("REALIZAR PEDIDO", icon=ft.Icons.ADD,
                               on_click=lambda _: mostrar_pantalla_pedido(), width=300, height=60),
@@ -99,6 +104,7 @@ def main(page: ft.Page):
                               on_click=lambda _: mostrar_pantalla_inventario(), width=300, height=60),
             ft.TextButton("Cambiar de Clínica", on_click=reiniciar_app)
         )
+        page.update()
 
     def mostrar_pantalla_pedido():
         page.clean()
@@ -129,7 +135,7 @@ def main(page: ft.Page):
             page.update()
 
         ac_reactivo = ft.AutoComplete(suggestions=[ft.AutoCompleteSuggestion(
-            key=k, value=k) for k in STOCK_ACTUAL.keys()], on_select=al_seleccionar_reactivo)
+            key=k, value=k) for k in STOCK_ACTUAL.keys()], on_select=al_seleccionar_reactivo)  # type: ignore
 
         def agregar_al_carrito(e):
             if ac_reactivo.value and txt_piezas.value:
