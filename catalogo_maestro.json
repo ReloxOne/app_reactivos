@@ -1,0 +1,442 @@
+{
+    "08057800190": {
+        "alias": "GLUC3",
+        "fabricacion": "Cassette",
+        "cant_com": 3300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08057532190": {
+        "alias": "CREJ2",
+        "fabricacion": "Cassette",
+        "cant_com": 2500.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08104697190": {
+        "alias": "ALTP2",
+        "fabricacion": "Cassette",
+        "cant_com": 800.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08058679190": {
+        "alias": "TPUC3",
+        "fabricacion": "Cassette",
+        "cant_com": 650.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08056757190": {
+        "alias": "ALP2",
+        "fabricacion": "Cassette",
+        "cant_com": 1100.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08057877190": {
+        "alias": "HDLC4",
+        "fabricacion": "Cassette",
+        "cant_com": 700.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08104719190": {
+        "alias": "ASTP2",
+        "fabricacion": "Cassette",
+        "cant_com": 800.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08058652190": {
+        "alias": "TP2",
+        "fabricacion": "Cassette",
+        "cant_com": 1050.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08056951190": {
+        "alias": "BILD2",
+        "fabricacion": "Cassette",
+        "cant_com": 1000.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "10421436190": {
+        "alias": "BILT3",
+        "fabricacion": "Cassette",
+        "cant_com": 1050.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08057796190": {
+        "alias": "GGT-2",
+        "fabricacion": "Cassette",
+        "cant_com": 400.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08057958190": {
+        "alias": "LDH",
+        "fabricacion": "Cassette",
+        "cant_com": 850.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08058687190": {
+        "alias": "TRIGL",
+        "fabricacion": "Cassette",
+        "cant_com": 1000.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08058806190": {
+        "alias": "UREAL",
+        "fabricacion": "Cassette",
+        "cant_com": 600.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08058750190": {
+        "alias": "UA2",
+        "fabricacion": "Cassette",
+        "cant_com": 1300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08057443190": {
+        "alias": "CHOL2",
+        "fabricacion": "Cassette",
+        "cant_com": 2600.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "08056692190": {
+        "alias": "ALB2",
+        "fabricacion": "Cassette",
+        "cant_com": 750.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Q. Analítica"
+    },
+    "04528182190": {
+        "alias": "A1CD",
+        "fabricacion": "Cassette",
+        "cant_com": 50.0,
+        "u_medida": "mL",
+        "u_conteo": 50.0,
+        "analizador": "Q. Analítica"
+    },
+    "08056668190": {
+        "alias": "A1CX3",
+        "fabricacion": "Cassette",
+        "cant_com": 50.0,
+        "u_medida": "mL",
+        "u_conteo": 50.0,
+        "analizador": "Q. Analítica"
+    },
+    "08463093190": {
+        "alias": "SCCS",
+        "fabricacion": "Cassette",
+        "cant_com": 50.0,
+        "u_medida": "mL",
+        "u_conteo": 50.0,
+        "analizador": "Q. Analítica"
+    },
+    "08063478190": {
+        "alias": "SMS",
+        "fabricacion": "Cassette",
+        "cant_com": 123.0,
+        "u_medida": "mL",
+        "u_conteo": NaN,
+        "analizador": "Q. Analítica"
+    },
+    "08063354190": {
+        "alias": "ECO-D",
+        "fabricacion": "Cassette",
+        "cant_com": 40.0,
+        "u_medida": "mL",
+        "u_conteo": NaN,
+        "analizador": "Q. Analítica"
+    },
+    "08063451190": {
+        "alias": "NAOHD",
+        "fabricacion": "Cassette",
+        "cant_com": 123.0,
+        "u_medida": "mL",
+        "u_conteo": NaN,
+        "analizador": "Q. Analítica"
+    },
+    "08063494190": {
+        "alias": "NACL",
+        "fabricacion": "Cassette",
+        "cant_com": 123.0,
+        "u_medida": "mL",
+        "u_conteo": NaN,
+        "analizador": "Q. Analítica"
+    },
+    "08302545190": {
+        "alias": "BASIC WASH",
+        "fabricacion": "Botella",
+        "cant_com": 2000.0,
+        "u_medida": "mL",
+        "u_conteo": 2000.0,
+        "analizador": "Q. Analítica"
+    },
+    "08302723190": {
+        "alias": "ACID WASH",
+        "fabricacion": "Botella",
+        "cant_com": 2000.0,
+        "u_medida": "mL",
+        "u_conteo": 2000.0,
+        "analizador": "Q. Analítica"
+    },
+    "10394246001": {
+        "alias": "Sample Cup",
+        "fabricacion": "Caja",
+        "cant_com": 5000.0,
+        "u_medida": "Copas",
+        "u_conteo": 250.0,
+        "analizador": "Q. Analítica"
+    },
+    "07027699190": {
+        "alias": "PROG 3",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "08946370190": {
+        "alias": "TESTO2",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "07027575190": {
+        "alias": "LH",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "09043284190": {
+        "alias": "FT4 4",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "09005811190": {
+        "alias": "FT3 3",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "09007784190": {
+        "alias": "T4",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "09007733190": {
+        "alias": "T3",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "08443432190": {
+        "alias": "TSH",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "07027737190": {
+        "alias": "PRL2",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "07027249190": {
+        "alias": "E2 3",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "08828610190": {
+        "alias": "FPSA",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "08791732190": {
+        "alias": "TPSA",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "08932387190": {
+        "alias": "FSH",
+        "fabricacion": "Cassette",
+        "cant_com": 300.0,
+        "u_medida": "Pruebas",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "07299001190": {
+        "alias": "Dil Uni",
+        "fabricacion": "Cassette",
+        "cant_com": 36.0,
+        "u_medida": "mL",
+        "u_conteo": 36.0,
+        "analizador": "Inmunología"
+    },
+    "07299010190": {
+        "alias": "Dil Ma",
+        "fabricacion": "Cassette",
+        "cant_com": 36.0,
+        "u_medida": "mL",
+        "u_conteo": 36.0,
+        "analizador": "Inmunología"
+    },
+    "06908853190": {
+        "alias": "PRECLEAN II M",
+        "fabricacion": "nan",
+        "cant_com": 1.0,
+        "u_medida": "L",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "06908799190": {
+        "alias": "PROCELL II M",
+        "fabricacion": "nan",
+        "cant_com": 1.0,
+        "u_medida": "L",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "04880293190": {
+        "alias": "CLEANCELL M",
+        "fabricacion": "nan",
+        "cant_com": 1.0,
+        "u_medida": "L",
+        "u_conteo": 1.0,
+        "analizador": "Inmunología"
+    },
+    "05694302001": {
+        "alias": "AssayTip/AssayCup tray",
+        "fabricacion": "Caja",
+        "cant_com": 6.0,
+        "u_medida": "Bandejas",
+        "u_conteo": 6.0,
+        "analizador": "Inmunología"
+    },
+    "DCL-300A": {
+        "alias": "CELLPACK DCL",
+        "fabricacion": "nan",
+        "cant_com": 20.0,
+        "u_medida": "L",
+        "u_conteo": 20.0,
+        "analizador": "Hematología"
+    },
+    "SLS-220A": {
+        "alias": "SULFOLYSER",
+        "fabricacion": "nan",
+        "cant_com": 5.0,
+        "u_medida": "L",
+        "u_conteo": 5.0,
+        "analizador": "Hematología"
+    },
+    "ZA900001": {
+        "alias": "LYSERCELL WDF",
+        "fabricacion": "nan",
+        "cant_com": 5.0,
+        "u_medida": "L",
+        "u_conteo": 5.0,
+        "analizador": "Hematología"
+    },
+    "CV-377-552": {
+        "alias": "FLUOROCELL WDF",
+        "fabricacion": "nan",
+        "cant_com": 42.0,
+        "u_medida": "mL",
+        "u_conteo": 42.0,
+        "analizador": "Hematología"
+    },
+    "CF-579-595": {
+        "alias": "CELLCLEAN AUTO",
+        "fabricacion": "nan",
+        "cant_com": 4.0,
+        "u_medida": "mL",
+        "u_conteo": 4.0,
+        "analizador": "Hematología"
+    },
+    "213499": {
+        "alias": "XN CHECK",
+        "fabricacion": "nan",
+        "cant_com": 3.0,
+        "u_medida": "Tubos x 3 mL",
+        "u_conteo": 1.0,
+        "analizador": "Hematología"
+    },
+    "11379194263": {
+        "alias": "Control-Test M",
+        "fabricacion": "nan",
+        "cant_com": 50.0,
+        "u_medida": "Tiras en frasco",
+        "u_conteo": 1.0,
+        "analizador": "Uroanálisis"
+    },
+    "04352483001": {
+        "alias": "Thermo-Printer Paper",
+        "fabricacion": "nan",
+        "cant_com": 1.0,
+        "u_medida": "Rollo",
+        "u_conteo": 1.0,
+        "analizador": "Uroanálisis"
+    },
+    "09587624190": {
+        "alias": "Combur10 Test M",
+        "fabricacion": "nan",
+        "cant_com": 100.0,
+        "u_medida": "Tiras en frasco",
+        "u_conteo": 1.0,
+        "analizador": "Uroanálisis"
+    }
+}
