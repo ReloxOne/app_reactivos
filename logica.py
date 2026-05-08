@@ -127,24 +127,32 @@ def obtener_alertas_desde_excel(unidad):
     archivos = [f for f in os.listdir(ruta_inv) if f.endswith(".xlsx")]
     if not archivos:
         return ["⚪ Sin reportes previos para esta unidad."]
-    
+
     try:
+        # Cargamos el último inventario Y el catálogo
         ultimo = os.path.join(ruta_inv, sorted(archivos)[-1])
-        df = pd.read_excel(ultimo)
-        alertas = []
+        df = pd.read_excel(ultimo, dtype={"Referencia": str})
+        catalogo = obtener_catalogo()  # ← ya tienes esta función, la reutilizamos
         hoy = datetime.now()
+        alertas = []
 
         for _, fila in df.iterrows():
-            alias = fila.get("Alias", "Desconocido")
-            lote = fila.get("Lote", "S/L")
-            total = fila.get("Total Real", 0)
+            alias     = fila.get("Alias", "Desconocido")
+            lote      = fila.get("Lote", "S/L")
+            total     = fila.get("Total Real", 0)
             fecha_cad = fila.get("Caducidad")
+            referencia = str(fila.get("Referencia", "")).strip()
 
-            # 1. Alertas de Stock (Prioridad Crítica)
+            # Buscamos el Stock_Minimo en el catálogo para este reactivo
+            # Si no existe en el catálogo, usamos 0 (sin alerta de stock)
+            info_cat = catalogo.get(referencia, {})
+            stock_minimo = int(info_cat.get("Stock_Minimo", 0))
+
+            # 1. Alertas de Stock usando Stock_Minimo del catálogo
             if total == 0:
-                alertas.append(f"❌ El reactivo {alias} está en CERO.")
-            elif total < 200: # Ajusta este umbral según tu necesidad
-                alertas.append(f"⚠️ El reactivo {alias} está por terminarse ({int(total)} pruebas).")
+                alertas.append(f"❌ {alias} está en CERO.")
+            elif stock_minimo > 0 and total < stock_minimo:
+                alertas.append(f"⚠️ {alias} está por terminarse ({int(total)} pruebas, mínimo: {stock_minimo}).")
 
             # 2. Alertas de Caducidad
             if pd.notna(fecha_cad):
@@ -156,14 +164,13 @@ def obtener_alertas_desde_excel(unidad):
                         alertas.append(f"🥀 Lote {lote} de {alias} está CADUCO.")
                     elif dias_restantes <= 30:
                         alertas.append(f"⏳ Lote {lote} de {alias} vence el {fecha_cad}.")
-                except:
-                    pass
+                except Exception as e:
+                    print(f"Error al procesar fecha '{fecha_cad}' del reactivo {alias}: {e}")
 
-        # Retornamos las 3 alertas más importantes para no saturar el menú
         if not alertas:
             return ["✅ Niveles y caducidades en orden."]
-        
-        return alertas[:4] 
+
+        return alertas[:4]
 
     except Exception as e:
         return [f"⚠️ Error al procesar alertas: {str(e)}"]
@@ -171,12 +178,43 @@ def obtener_alertas_desde_excel(unidad):
 def obtener_ultimo_inventario_dict(unidad):
     ruta_inv = asegurar_ruta(unidad, "Inventarios")
     archivos = [f for f in os.listdir(ruta_inv) if f.endswith(".xlsx")]
-    if not archivos: return {}
-    
+    if not archivos:
+        return {}
+
     ultimo = os.path.join(ruta_inv, sorted(archivos)[-1])
     df = pd.read_excel(ultimo, dtype={"Referencia": str})
-    
-    return df.set_index("Referencia").to_dict("index")
+
+    resultado = {}
+
+    for _, fila in df.iterrows():
+        ref = str(fila.get("Referencia", "")).strip()
+        if not ref:
+            continue
+
+        lote_actual = {
+            "lote":       fila.get("Lote", ""),
+            "caducidad":  fila.get("Caducidad", ""),
+            "en_uso":     fila.get("A Bordo", 0),
+            "stock_nuevo": fila.get("Nuevos", 0),
+        }
+
+        if ref not in resultado:
+            # Primera vez que vemos esta referencia
+            resultado[ref] = {
+                "Alias":      fila.get("Alias", ""),
+                "A Bordo":    fila.get("A Bordo", 0),
+                "Nuevos":     fila.get("Nuevos", 0),
+                "Total Real": fila.get("Total Real", 0),
+                "lotes":      [lote_actual]  # lista de lotes
+            }
+        else:
+            # Referencia ya existe — acumulamos el lote y sumamos cantidades
+            resultado[ref]["lotes"].append(lote_actual)
+            resultado[ref]["A Bordo"]    += fila.get("A Bordo", 0)
+            resultado[ref]["Nuevos"]     += fila.get("Nuevos", 0)
+            resultado[ref]["Total Real"] += fila.get("Total Real", 0)
+
+    return resultado
 
 def procesar_y_guardar_pedido_final(unidad, lista_carrito):
     # 1. Obtener último inventario

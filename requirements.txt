@@ -1,0 +1,5 @@
+flet==0.84.0
+pandas
+openpyxl
+reportlab
+python-dotenv

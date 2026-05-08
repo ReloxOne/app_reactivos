@@ -12,3 +12,5 @@ Inventario_Unidades/
 
 # VSCode (opcional, algunos prefieren subirlo)
 .vscode/
+
+build/
