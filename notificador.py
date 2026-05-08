@@ -1,34 +1,58 @@
 import smtplib
-from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+import os
+from datetime import datetime
+from dotenv import load_dotenv
 
-def enviar_por_correo(archivo_adjunto):
-    # --- CONFIGURACIÓN (Usa tus datos aquí) ---
-    remitente = "acruz@smlaboratorios.com"
-    destinatario = "acruz@smlaboratorios.com" # Puede ser el mismo para pruebas
-    password = "bxrz zwvr fbim nhua" # La contraseña de aplicación de Google
-    
-    msg = EmailMessage()
-    msg['Subject'] = "Nuevo Pedido de Reactivos - " + archivo_adjunto
-    msg['From'] = remitente
-    msg['To'] = destinatario
-    msg.set_content("Hola, adjunto el archivo actualizado con los pedidos de reactivos.")
+# Variables .env
+load_dotenv()
 
-    # Leemos el archivo Excel para adjuntarlo
-    with open(archivo_adjunto, 'rb') as f:
-        file_data = f.read()
-        msg.add_attachment(
-            file_data, 
-            maintype='application', 
-            subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
-            filename=archivo_adjunto
-        )
+def enviar_por_correo(lista_rutas, unidad_nombre):
+    # Leer variables .env
+    remitente    = os.getenv("CORREO_REMITENTE")
+    password     = os.getenv("CORREO_PASSWORD")
+    destinatario = os.getenv("CORREO_DESTINATARIO")
 
-    # Conexión segura con el servidor de Gmail
+    # Validación de credenciales
+    if not all([remitente, password, destinatario]):
+        print("Error: faltan credenciales en el archivo .env")
+        return False
+
+    msg = MIMEMultipart()
+    nombre_base = os.path.basename(lista_rutas[0]) if lista_rutas else "Pedido"
+    msg['Subject'] = f"PEDIDO DE REACTIVOS - {nombre_base}"
+    msg['From']    = remitente
+    msg['To']      = destinatario
+
+    fecha_hoy = datetime.now().strftime("%d/%m/%Y a las %H:%M horas")
+
+    cuerpo_mensaje = f"""Este es un correo automatizado.
+
+Se adjunta el pedido de reactivos correspondiente a la unidad: {unidad_nombre},
+generado el día {fecha_hoy}.
+
+Favor de tomarlo en cuenta para su procesamiento.
+
+No es necesario responder a este correo."""
+
+    msg.attach(MIMEText(cuerpo_mensaje, "plain"))
+
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(remitente, password)
-            smtp.send_message(msg)
+        for ruta in lista_rutas:
+            if ruta and os.path.exists(ruta):
+                with open(ruta, "rb") as f:
+                    parte = MIMEApplication(f.read(), Name=os.path.basename(ruta))
+                parte['Content-Disposition'] = f'attachment; filename="{os.path.basename(ruta)}"'
+                msg.attach(parte)
+
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(remitente, password)
+            server.send_message(msg)
         return True
+
     except Exception as e:
-        print(f"Error al enviar: {e}")
+        print(f"Error en envío: {e}")
         return False

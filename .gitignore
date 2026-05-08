@@ -1,0 +1,14 @@
+# Credenciales
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Datos generados en ejecución
+Reportes/
+Inventario_Unidades/
+
+# VSCode (opcional, algunos prefieren subirlo)
+.vscode/
